@@ -13,7 +13,7 @@ screen = pygame.display.set_mode(size)
 
 
 def load_image(name, colorkey=None):
-    fullname = os.path.join(name)
+    fullname = os.path.join('data', name)
     # если файл не существует, то выходим
     if not os.path.isfile(fullname):
         print(f"Файл с изображением '{fullname}' не найден")
@@ -41,6 +41,10 @@ class Bomb(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(width - 50)
         self.rect.y = random.randrange(height - 51)
+        while (pygame.sprite.spritecollideany(self, all_sprites) and
+               pygame.sprite.spritecollideany(self, all_sprites) != self):
+            self.rect.x = random.randrange(width - 50)
+            self.rect.y = random.randrange(height - 51)
         self.flag = False
 
     def update(self, *args):
